@@ -1,0 +1,70 @@
+@startuml BancoDeSangre
+class BancoDeSangre {
+    - donantes : Donante[]
+    - direccion : String
+    - personal : Personal[]
+    + BuscarPorCI(CI : String) : Donante
+    + ListarPorMayorCantidad(cantidad : int) : Donante[]
+    + BuscarCIDonanteOPos(mes : String) : String
+    + BuscarVolumenTotalDonanteOPos() : float
+    + OrdenarPorNombre(CI : String) : Donante[]
+    + OrdenarPorGrupoSanguineo(grupo_sanguineo : String, factor_rh : String) : Donante[]
+    + AddDonante(donante : Donante) : void
+    + EliminarDonante(donante : Donante) : void
+    + ModDonante(donante : Donante) : void
+    + AddDonacion(donante : Donante, Donacion : Donacion) : void
+    + EliminarDonacion(donante : Donante, Donacion : Donacion) : void
+    + ModDonacion(donante : Donante, Donacion : Donacion) : void
+    + AddPersonal(personal : Personal) : void
+    + EliminarPersonal(personal : Personal) : void
+    + ModPersonal(personal : Personal) : void
+}
+
+class Donante{
+    - CI : String
+    - nombre_completo : String
+    - grupo_sanguineo : String
+    - factor_rh : String
+    - direccion : String
+    - observaciones : String
+    - donaciones : Donacion[]
+
+    + Donante(CI : String, nombre_completo : String, grupo_sanguineo : String, factor_rh : String,
+     direccion : String, observaciones : String, donaciones : Donacion[]) : void
+    + getNombre() : String
+    +getCI() : String
+    + getGrupoSanguineo() : String
+    + getFactorRH() : String
+    + getMesUltDonacion() : String
+    + getVolumenUltDonacion() : float
+    +getNombreEmpleadoUltDonacion() : String
+}
+
+class Personal{
+    - CI : String
+    - nombre_completo : String
+    - direccion : String
+    - cargo : String
+
+    + Personal(CI : String, nombre_completo : String, direccion : String, cargo : String) : void
+    +getNombre() : String
+}
+
+class Donacion{
+    - fecha : String
+    - volumen : float
+    - codigo_bolsa : String
+    - localizacion_actual : String
+    - CI_empleado : String
+
+    + Donacion(fecha : String, volumen : float, codigo_bolsa : String,
+     localizacion_actual : String, CI_empleado : String) : void
+    +getFecha() : String
+    +getVolumen() : String
+    +getNombreEmpleado() : String
+}
+
+BancoDeSangre "1" *-- "*" Donante : Registrado en:
+Donante "1" o-- "*" Donacion : Realizado por:
+BancoDeSangre "1" *--  "*" Personal : Trabaja en:
+@enduml
