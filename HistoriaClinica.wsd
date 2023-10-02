@@ -1,64 +1,63 @@
 @startuml HistoriaClinica
-class HistoriaClinica {
+class Hospital {
     - pacientes : Paciente[]
     + BuscarPorCI(CI : String) : Paciente
     + ListarPorEstatura(cantidad : int) : String[]
     + BuscarCantDengueF() : int
-    + OrdenarPorNombre(CI : String) : Paciente[]
-    + OrdenarPorPeso(CI : String) : Paciente[]
+    + OrdenarPorNombre() : Paciente[]
+    + OrdenarPorPeso() : Paciente[]
     + AddPaciente(paciente : Paciente) : void
     + EliminarPaciente(paciente : Paciente) : void
-    + ModPaciente(paciente : Paciente) : void
+    + ModificarPaciente(paciente : Paciente) : void
     + AddImagen(paciente : Paciente, imagen : Imagen) : void
     + EliminarImagen(paciente : Paciente, imagen : Imagen) : void
-    + ModImagen(paciente : Paciente, imagen : Imagen) : void
+    + ModificarImagen(paciente : Paciente, imagen : Imagen) : void
     + AddEnfermedad(paciente : Paciente, enfermedad : Enfermedad) : void
     + EliminarEnfermedad(paciente : Paciente, enfermedad : Enfermedad) : void
-    + ModEnfermedad(paciente : Paciente, enfermedad : Enfermedad) : void
+    + ModificarEnfermedad(paciente : Paciente, enfermedad : Enfermedad) : void
 }
 
 class Paciente{
     - CI : String
-    - nombre_completo : String
+    - nombre : String
+    - apellidos : String
     - fecha_nacimiento : String
     - sexo : String
     - peso : float
     - estatura : float
     - direccion : String
+    - historia_clinica : HistoriaClinica
+
+    + Paciente(CI : String, nombre : String, apellidos : String, fecha_nacimiento : String, sexo : String, peso : float,
+    estatura : float, direccion : String, historia_clinica : HistoriaClinica) : void
+}
+
+class HistoriaClinica{
     - imagenes : Imagen[]
     - enfermedades : Enfermedad[]
-
-    + Paciente(CI : String, nombre_completo : String, fecha_nacimiento : String, sexo : String, peso : float,
-    estatura : float, direccion : String, imagenes : Imagen[], enfermedades : Enfermedad[]) : void
-    + getNombre() : String
-    + getCI() : String
-    + getSexo() : String
-    + getEstatura() : float
-    + getPeso() : float
-    + getImagenes() : Imagen[]
-    + setImagenes() : Imagen[]
-    + getEnfermedades() : Enfermedad[]
-    + setEnfermedades() : Enfermedad[]
+    
+    + HistoriaClinica(imagenes : Imagen[], enfermedades : Enfermedad[])
 }
 
 class Enfermedad{
     - nombre : String
-    - fecha : String
+    - fecha : Date
     - tratamiento : String
 
-    + Enfermedad(nombre : String, fecha : String, tratamiento : String) : void
+    + Enfermedad(nombre : String, fecha : Date, tratamiento : String) : void
 }
 
 class Imagen{
     - nombre_archivo : String
-    - fecha : String
+    - fecha : Date
     - tipo : String
     - comentario : String
 
-    + Imagen(nombre_archivo : String, fecha : String, tipo : String, comentario : String) : void
+    + Imagen(nombre_archivo : String, fecha : Date, tipo : String, comentario : String) : void
 }
 
-HistoriaClinica "1" *-- "*" Paciente : Registrado en:
-Paciente "1" o-- "*" Enfermedad : Padece de:
-Paciente "1" o--  "*" Imagen : Pertenece a:
+Hospital "1" *-- "*" Paciente : Registrado en:
+Paciente "1" o-- "1" HistoriaClinica : Pertenece a:
+HistoriaClinica "1" o--  "*" Imagen : Archivado en:
+HistoriaClinica "1" o--  "*" Enfermedad : Archivado en:
 @enduml

@@ -5,19 +5,19 @@ class BancoDeSangre {
     - personal : Personal[]
     + BuscarPorCI(CI : String) : Donante
     + ListarPorMayorCantidad(cantidad : int) : Donante[]
-    + BuscarCIDonanteOPos(mes : String) : String
+    + BuscarCIDonanteOPos(mes : int) : String
     + BuscarVolumenTotalDonanteOPos() : float
-    + OrdenarPorNombre(CI : String) : Donante[]
-    + OrdenarPorGrupoSanguineo(grupo_sanguineo : String, factor_rh : String) : Donante[]
+    + OrdenarPorNombre() : Donante[]
+    + OrdenarPorGrupoSanguineo() : Donante[]
     + AddDonante(donante : Donante) : void
     + EliminarDonante(donante : Donante) : void
-    + ModDonante(donante : Donante) : void
+    + ModificarDonante(donante : Donante) : void
     + AddDonacion(donante : Donante, Donacion : Donacion) : void
     + EliminarDonacion(donante : Donante, Donacion : Donacion) : void
-    + ModDonacion(donante : Donante, Donacion : Donacion) : void
+    + ModificarDonacion(donante : Donante, Donacion : Donacion) : void
     + AddPersonal(personal : Personal) : void
     + EliminarPersonal(personal : Personal) : void
-    + ModPersonal(personal : Personal) : void
+    + ModificarPersonal(personal : Personal) : void
 }
 
 class Donante{
@@ -31,40 +31,30 @@ class Donante{
 
     + Donante(CI : String, nombre_completo : String, grupo_sanguineo : String, factor_rh : String,
      direccion : String, observaciones : String, donaciones : Donacion[]) : void
-    + getNombre() : String
-    +getCI() : String
-    + getGrupoSanguineo() : String
-    + getFactorRH() : String
-    + getMesUltDonacion() : String
-    + getVolumenUltDonacion() : float
-    +getNombreEmpleadoUltDonacion() : String
 }
 
 class Personal{
     - CI : String
-    - nombre_completo : String
+    - nombre : String
+    - apellidos : String
     - direccion : String
     - cargo : String
 
-    + Personal(CI : String, nombre_completo : String, direccion : String, cargo : String) : void
-    +getNombre() : String
+    + Personal(CI : String, nombre : String, apellidos : String, direccion : String, cargo : String) : void
 }
 
 class Donacion{
-    - fecha : String
+    - fecha : Date
     - volumen : float
     - codigo_bolsa : String
     - localizacion_actual : String
     - CI_empleado : String
 
-    + Donacion(fecha : String, volumen : float, codigo_bolsa : String,
+    + Donacion(fecha : Date, volumen : float, codigo_bolsa : String,
      localizacion_actual : String, CI_empleado : String) : void
-    +getFecha() : String
-    +getVolumen() : String
-    +getNombreEmpleado() : String
 }
 
 BancoDeSangre "1" *-- "*" Donante : Registrado en:
-Donante "1" o-- "*" Donacion : Realizado por:
+Donante "1" *-- "*" Donacion : Realizado por:
 BancoDeSangre "1" *--  "*" Personal : Trabaja en:
 @enduml
